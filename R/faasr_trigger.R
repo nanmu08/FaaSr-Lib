@@ -133,6 +133,11 @@ faasr_trigger <- function(faasr) {
 
 	    # Invoke next function with FunctionName and Payload, receive trigger response
         next_lambda_function_name <- faasr$FunctionList[[invoke_next_function]]$Actionname
+
+        lambda_msg <- paste0('{\"faasr_trigger, msg for update lambda trigger\":\"will trigger',user_function,'_next_action_',next_lambda_function_name,'_will_be_executed by_',next_server_type,'\"}', "\n")
+        cat(lambda_msg)
+        faasr_log(lambda_msg)
+        
         response <- lambda$invoke(
           FunctionName = next_lambda_function_name,
           Payload = payload_json
